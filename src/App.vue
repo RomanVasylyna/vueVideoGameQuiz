@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-  <Header />
+  <Header 
+  :index="index"
+  
+  />
 
   <b-container class="bv-example-row">
   <b-row>
@@ -37,7 +40,7 @@ export default {
   methods : {
 
   increment() {
-  while(this.index < 10) {
+  while(this.index < 9) {
   this.index++;
   console.log(this.index);
   break;

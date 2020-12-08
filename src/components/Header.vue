@@ -2,7 +2,7 @@
  <div id="main">
  <div>
   <b-nav class="nav">
-    <b-nav-item disabled>Question 1/10</b-nav-item>
+    <b-nav-item disabled>Question {{index+1}}/10</b-nav-item>
     <b-nav-item disabled>Correct 0/10</b-nav-item>
   </b-nav>
 </div>
@@ -15,6 +15,20 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
+
+data() {
+return {
+
+}
+},  
+
+ props : {
+  index : Number,
+ },
+ 
+//  mounted (){
+//  this.a = 1;
+//  }
     
 }
 </script>
