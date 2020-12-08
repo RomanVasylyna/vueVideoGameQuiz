@@ -1,7 +1,6 @@
 <template>
 <div id="main" class="mt-5">
 
-
     <div>
     <b-jumbotron>
         <!-- Question -->
@@ -12,10 +11,10 @@
         <b-list-group-item 
         class="list-item"
         :class="[]"
-        @click="selectedItem"
+        @click="selectedItem(ind)"
         :key="answer" 
-        v-for="(answer, ind) in shuffleArr(createArr())">
-        {{answer +  ind}}
+        v-for="(answer, ind) in shuffleArr()">
+        {{ answer }}
         </b-list-group-item>
         </b-list-group>
 
@@ -44,18 +43,15 @@ increment : Function,
 data() {
 return {
 selectedIntex : 0,
+mixedArr : [],
 }    
 },
 
 methods : {
 
-createArr () {
-let answers = [...this.currentQuestion.incorrect_answers];
-answers.push(this.currentQuestion.correct_answer);
-return answers;  
-}, 
-
-shuffleArr(a) {
+// Mix Answers Array
+shuffleArr() {
+let a = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer];
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
@@ -66,11 +62,16 @@ shuffleArr(a) {
     return a;
 },
 
-selectedItem() {
-console.log(this);
+selectedItem(index) { 
+let joinedArr = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer]; 
+if(index === joinedArr.indexOf(this.currentQuestion.correct_answer)) {
+console.log(index);
+}  
 },
 
 },
+
+
 
 
 }
