@@ -18,7 +18,7 @@
         </b-list-group-item>
         </b-list-group>
 
-        <b-button variant="success btn-lg mr-2" @click="createArr">Submit</b-button>
+        <b-button variant="success btn-lg mr-2" @click="submitAnswer">Submit</b-button>
         <b-button variant="primary btn-lg" @click="increment">Next</b-button>
 
     </b-jumbotron>
@@ -42,8 +42,9 @@ increment : Function,
 
 data() {
 return {
-selectedIntex : 0,
+selectedIndex : null,
 mixedArr : [],
+correctIndex : null,
 }    
 },
 
@@ -63,10 +64,16 @@ let a = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct
 },
 
 selectedItem(index) { 
-let joinedArr = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer]; 
-if(index === joinedArr.indexOf(this.currentQuestion.correct_answer)) {
-console.log(index);
-}  
+this.selectedIndex = index;    
+// let joinedArr = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer]; 
+// if(index === joinedArr.indexOf(this.currentQuestion.correct_answer)) {
+console.log(this.selectedIndex);
+// }  
+},
+
+submitAnswer() {
+this.correctIndex = this.currentQuestion.correct_answer;
+console.log(this.correctIndex);
 },
 
 },
