@@ -4,7 +4,7 @@
     <div>
     <b-jumbotron>
         <!-- Question -->
-        <h1>{{currentQuestion.question}}</h1>
+        <h1>{{ currentQuestion.question }}</h1>
 
         <!-- Answers -->
         <b-list-group class="mb-3">
@@ -13,7 +13,7 @@
         :class="[]"
         @click="selectedItem(ind)"
         :key="answer" 
-        v-for="(answer, ind) in shuffleArr()">
+        v-for="(answer, ind) in shuffleArr(answers)">
         {{ answer }}
         </b-list-group-item>
         </b-list-group>
@@ -40,19 +40,34 @@ currentQuestion : Object,
 increment : Function,
 }, 
 
+// Lifecycle Hook
+mounted () {
+console.log(this.currentQuestion);
+},
+
 data() {
 return {
-selectedIndex : null,
+selectedIndex : null, //Currently Selected Answer Index
 mixedArr : [],
 correctIndex : null,
 }    
 },
 
+computed : {
+
+answers() {
+let answers = [...this.currentQuestion.incorrect_answers]; //Copying the array
+answers.push(this.currentQuestion.correct_answer);
+return answers;
+}
+
+},
+
+
 methods : {
 
 // Mix Answers Array
-shuffleArr() {
-let a = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer];
+shuffleArr(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
@@ -64,16 +79,16 @@ let a = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct
 },
 
 selectedItem(index) { 
-this.selectedIndex = index;    
-// let joinedArr = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer]; 
-// if(index === joinedArr.indexOf(this.currentQuestion.correct_answer)) {
-console.log(this.selectedIndex);
-// }  
+this.selectedIndex = index; 
+console.log(index);   
 },
 
 submitAnswer() {
 this.correctIndex = this.currentQuestion.correct_answer;
 console.log(this.correctIndex);
+// if(index === joinedArr.indexOf(this.currentQuestion.correct_answer)) {
+// console.log(this.selectedIndex);
+// }   
 },
 
 },

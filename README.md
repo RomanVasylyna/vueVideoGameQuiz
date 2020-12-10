@@ -38,3 +38,12 @@ Vue Lifecycle Hooks - это функции, который срабатываю
 6) beforeDestroy - Событие срабатывает перед тем как элемент уничтожен
 7) destroy - Событие срабатывает в момент уничтожения элемента
 
+Cannot read property 'question' of undefined"
+Так происходит потому-что на короткое мгновение, когда компонент отрисовуется, он ждет ответ от АПИ (fetch request) в App.vue
+
+Решение в App.vue в компонент Question добавить v-if="questions.length"
+
+Изучить :
+1) v-if (vue conditionals)
+2) computed vs method 
+
