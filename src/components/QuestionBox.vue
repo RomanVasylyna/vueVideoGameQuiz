@@ -10,16 +10,23 @@
         <b-list-group class="mb-3">
         <b-list-group-item 
         class="list-item"
-        :class="[]"
         @click="selectedItem(ind)"
+        :class="[selectedIndex === ind ? 'selectedItem' : '']"
         :key="answer" 
-        v-for="(answer, ind) in shuffleArr(answers)">
+        v-for="(answer, ind) in answers">
         {{ answer }}
         </b-list-group-item>
         </b-list-group>
 
-        <b-button variant="success btn-lg mr-2" @click="submitAnswer">Submit</b-button>
-        <b-button variant="primary btn-lg" @click="increment">Next</b-button>
+        <b-button variant="success btn-lg mr-2" 
+        @click="submitAnswer">
+        Submit
+        </b-button>
+
+        <b-button variant="primary btn-lg" 
+        @click="next">
+        Next
+        </b-button>
 
     </b-jumbotron>
     </div> 
@@ -37,13 +44,14 @@ export default {
  
 props : {
 currentQuestion : Object,
-increment : Function,
+next : Function,
+correctAnswers : Function,
 }, 
 
 // Lifecycle Hook
-mounted () {
-console.log(this.currentQuestion);
-},
+// mounted () {
+// console.log(this.currentQuestion);
+// },
 
 data() {
 return {
@@ -58,7 +66,7 @@ computed : {
 answers() {
 let answers = [...this.currentQuestion.incorrect_answers]; //Copying the array
 answers.push(this.currentQuestion.correct_answer);
-return answers;
+return this.shuffleArr(answers);
 }
 
 },
@@ -84,11 +92,14 @@ console.log(index);
 },
 
 submitAnswer() {
-this.correctIndex = this.currentQuestion.correct_answer;
-console.log(this.correctIndex);
-// if(index === joinedArr.indexOf(this.currentQuestion.correct_answer)) {
-// console.log(this.selectedIndex);
-// }   
+// this.correctIndex = this.currentQuestion.correct_answer;
+// console.log(this.correctIndex); 
+
+let isCorrect = false; //False Boolean    
+if(this.selectedIndex === this.correctIndex) { //If selected index = correct answer index (if user has chosen the correct answer)
+ isCorrect = true; //Boolean = true  
+}
+this.correctAnswers(isCorrect); // Increment number of correct answers
 },
 
 },
@@ -108,6 +119,11 @@ cursor: pointer;
 
 .selectedItem{
 background: lightblue;
+color: #fff;    
+}
+
+.correctAnswer{
+background: green;
 color: #fff;    
 }
 

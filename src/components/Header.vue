@@ -1,9 +1,9 @@
 <template>
  <div id="main">
  <div>
-  <b-nav class="nav">
-    <b-nav-item disabled>Question {{index+1}}/10</b-nav-item>
-    <b-nav-item disabled>Correct 0/10</b-nav-item>
+  <b-nav class="nav"> 
+    <b-nav-item disabled>Question {{ index+1 }}/{{ total }}</b-nav-item>
+    <b-nav-item disabled>Correct {{ numCorrect }}/{{ total }} </b-nav-item>
   </b-nav>
 </div>
  </div>   
@@ -16,19 +16,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
 
-data() {
-return {
-
-}
-},  
-
  props : {
   index : Number,
+  total : Number,
+  numCorrect : Number,
  },
  
-//  mounted (){
-//  this.a = 1;
-//  }
     
 }
 </script>

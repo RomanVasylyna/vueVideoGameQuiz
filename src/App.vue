@@ -2,6 +2,8 @@
   <div id="app">
   <Header 
   :index="index"
+  :total="numTotal"
+  :numCorrect="numCorrect"
   
   />
 
@@ -11,7 +13,8 @@
     <QuestionBox 
     v-if="questions.length"
     :currentQuestion="questions[index]"
-    :increment="increment"
+    :next="next"
+    :correctAnswers="correctAnswers"
     /></b-col>
   </b-row>
  </b-container>
@@ -33,19 +36,31 @@ export default {
 
   data () {
   return {
-  questions : [],
+  questions : [], //Put API response into array
   index : 0, 
+  numCorrect : 0, //Increase Number of Correct Answers
+  numTotal : 0,  //Total Number of Answers
   }    
   }, 
 
   methods : {
-
-  increment() {
+  
+  // Increment Amount of Question Passed
+  next() {
   while(this.index < 9) {
   this.index++;
   console.log(this.index);
   break;
   }  
+  },
+
+  correctAnswers(isCorrect) {
+  if(isCorrect) {
+  while(this.numCorrect < 10) {
+  this.numCorrect++;  
+  break;
+  } 
+  }   
   },
 
   },
@@ -57,6 +72,7 @@ export default {
   .then(res => res.json())
   .then(resJson => {
   this.questions = resJson.results;
+  this.numTotal = this.questions.length;
   console.log(this.questions);
   })
   .catch(err => console.log(err));
