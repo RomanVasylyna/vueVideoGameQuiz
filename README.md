@@ -46,4 +46,36 @@ Cannot read property 'question' of undefined"
 Изучить :
 1) v-if (vue conditionals)
 2) computed vs method 
+3) watch method + handler
+
+<!-- Watch if specific item was changed -->
+// Lifecycle Hook
+created() {
+this.updateCounter();
+},
+
+data() {
+return {
+counter : 0, 
+someText : '', 
+}
+},
+
+watch : {
+
+counter (newVal, oldVal) {
+console.log(`Old val : ${oldVal}, newVal : ${newVal}`);  
+},
+
+someText:"updateCounter",
+
+},
+
+methods : {
+updateCounter() {
+this.counter++;
+}  
+},
+
+Разобрать answered
 

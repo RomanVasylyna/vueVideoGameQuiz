@@ -14,7 +14,7 @@
     v-if="questions.length"
     :currentQuestion="questions[index]"
     :next="next"
-    :correctAnswers="correctAnswers"
+    :correctAnswers="correctAnswers" 
     /></b-col>
   </b-row>
  </b-container>
@@ -53,11 +53,11 @@ export default {
   break;
   }  
   },
-
-  correctAnswers(isCorrect) {
-  if(isCorrect) {
+  
+  correctAnswers(isCorrect) { //Param from the questionbox
+  if(isCorrect) { //if it's true
   while(this.numCorrect < 10) {
-  this.numCorrect++;  
+  this.numCorrect++;  // Counter ++
   break;
   } 
   }   

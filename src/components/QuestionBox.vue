@@ -19,6 +19,7 @@
         </b-list-group>
 
         <b-button variant="success btn-lg mr-2" 
+        :disabled="selectedIndex === null || answered"
         @click="submitAnswer">
         Submit
         </b-button>
@@ -48,17 +49,25 @@ next : Function,
 correctAnswers : Function,
 }, 
 
-// Lifecycle Hook
-// mounted () {
-// console.log(this.currentQuestion);
-// },
 
 data() {
 return {
 selectedIndex : null, //Currently Selected Answer Index
-mixedArr : [],
-correctIndex : null,
+mixedArr : [],        //Mixed array of answers
+correctIndex : null,  //Correct question's index
+answered : false,     //Meaning question wasn't answered
 }    
+},
+
+// Watch for specific item being changed
+watch : {
+currentQuestion : { //This is the item we want to track
+immediate : true, //As soon as it loads = create() lifecycle hook
+handler() {   
+this.selectedIndex = null;
+this.answered = false;    
+}    
+}
 },
 
 computed : {
@@ -91,14 +100,16 @@ this.selectedIndex = index;
 console.log(index);   
 },
 
-submitAnswer() {
-// this.correctIndex = this.currentQuestion.correct_answer;
-// console.log(this.correctIndex); 
 
+submitAnswer() {
+this.correctIndex = this.answers.indexOf(this.currentQuestion.correct_answer);    
 let isCorrect = false; //False Boolean    
+
 if(this.selectedIndex === this.correctIndex) { //If selected index = correct answer index (if user has chosen the correct answer)
- isCorrect = true; //Boolean = true  
+isCorrect = true; //Boolean = true
 }
+
+this.answered = true; 
 this.correctAnswers(isCorrect); // Increment number of correct answers
 },
 
