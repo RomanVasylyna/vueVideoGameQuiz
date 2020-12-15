@@ -11,13 +11,14 @@
         <b-list-group-item 
         class="list-item"
         @click="selectedItem(ind)"
-        :class="[selectedIndex === ind ? 'selectedItem' : '']"
+        :class="showAnswers(ind)"
         :key="answer" 
         v-for="(answer, ind) in answers">
         {{ answer }}
         </b-list-group-item>
         </b-list-group>
 
+ <!-- If user has not selected anything or if he already answered block the btn -->
         <b-button variant="success btn-lg mr-2" 
         :disabled="selectedIndex === null || answered"
         @click="submitAnswer">
@@ -100,8 +101,8 @@ this.selectedIndex = index;
 console.log(index);   
 },
 
-
-submitAnswer() {
+// Submit btn event
+submitAnswer() { 
 this.correctIndex = this.answers.indexOf(this.currentQuestion.correct_answer);    
 let isCorrect = false; //False Boolean    
 
@@ -111,6 +112,13 @@ isCorrect = true; //Boolean = true
 
 this.answered = true; 
 this.correctAnswers(isCorrect); // Increment number of correct answers
+},
+
+// Show correct/incorrect answers
+showAnswers(ind) {
+  return !this.answered && this.selectedIndex === ind ? 'selectedItem' : 
+  this.answered && this.correctIndex === ind ? 'correctAnswer' :
+  this.answered && this.selectedIndex === ind && this.correctIndex !== ind ? 'incorrectAnswer' : ''
 },
 
 },
@@ -136,6 +144,11 @@ color: #fff;
 .correctAnswer{
 background: green;
 color: #fff;    
+}
+
+.incorrectAnswer{
+background: red;  
+color: #fff;  
 }
 
 
